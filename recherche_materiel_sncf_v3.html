@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche du Parc Matériel SNCF</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; padding: 20px; }
+        #search { padding: 10px; width: 100%; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; background-color: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Recherche du Parc Matériel SNCF</h1>
+    <input type="text" id="search" placeholder="Rechercher un engin...">
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>Engin</th>
+                <th>Date de mise en service</th>
+                <th>Date de radiation</th>
+                <th>Livrée</th>
+                <th>STF</th>
+                <th>Baptême (Date)</th>
+                <th>Activité ou Régions</th>
+                <th>Transformation en BB 7600</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        let materiel = [];
+
+        // Charger le fichier JSON
+        fetch('materiel_sncf.json')
+            .then(response => response.json())
+            .then(data => {
+                materiel = data;
+                afficherMateriel(materiel);
+            })
+            .catch(error => console.error('Erreur de chargement du fichier JSON:', error));
+
+        // Afficher les résultats dans le tableau
+        function afficherMateriel(donnees) {
+            const tableBody = document.querySelector('#resultTable tbody');
+            tableBody.innerHTML = '';
+            donnees.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item['Engin'] || ''}</td>
+                    <td>${item['Date de mise en service'] || ''}</td>
+                    <td>${item['Date de radiation'] || ''}</td>
+                    <td>${item['Livrée'] || ''}</td>
+                    <td>${item['STF'] || ''}</td>
+                    <td>${item['Baptême (Date)'] || ''}</td>
+                    <td>${item['Activité ou Régions'] || ''}</td>
+                    <td>${item['Transformation en BB 7600'] || ''}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Recherche dynamique
+        document.getElementById('search').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const resultats = materiel.filter(item => item['Engin']?.toLowerCase().includes(query));
+            afficherMateriel(resultats);
+        });
+    </script>
+</body>
+</html>
