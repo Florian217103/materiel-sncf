@@ -22,6 +22,7 @@
                 <th>Date de mise en service</th>
                 <th>Date de radiation</th>
                 <th>Livrée</th>
+                <th>Nombre de caisse</th>
                 <th>STF</th>
                 <th>Baptême (Date)</th>
                 <th>Activité ou Régions</th>
@@ -50,9 +51,10 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${item['Engin'] || ''}</td>
-                    <td>${item['Date de mise en service'] || ''}</td>
-                    <td>${item['Date de radiation'] || ''}</td>
+                    <td>${item['Mise en service'] || ''}</td>
+                    <td>${item['Radiation'] || ''}</td>
                     <td>${item['Livrée'] || ''}</td>
+                    <td>${item['Nombre de caisse'] || ''}</td>
                     <td>${item['STF'] || ''}</td>
                     <td>${item['Baptême (Date)'] || ''}</td>
                     <td>${item['Activité ou Régions'] || ''}</td>
